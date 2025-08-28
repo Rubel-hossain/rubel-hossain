@@ -171,7 +171,6 @@
     position: relative;
     width: 100%;
     min-height: 100vh;
-    background-color: #f5f5f5;
     display: flex;
     flex-direction: column;
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
@@ -186,7 +185,7 @@
     width: 100vw; /* full-bleed navbar */
     z-index: 100;
     padding: 14px 24px;
-    background: rgba(255,255,255,0.98);
+    background: rgba(247,247,247,1);
   }
 
   .navbar-content {
@@ -298,7 +297,6 @@
     top: 0;
     left: 0;
     width: 100%;
-    height: 100%;
     background: rgba(255, 255, 255, 0.98);
     z-index: 1000;
     transform: translateX(-100%);
@@ -313,14 +311,16 @@
 
   .mobile-menu-header {
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
     padding: 15px 20px;
     border-bottom: 1px solid #eee;
-    background: #ff69b4;
+    background: #F7F7F7;
   }
 
   .close-menu {
+    position: absolute;
+    right: 20px;
     background: none;
     border: none;
     font-size: 2rem;
@@ -350,7 +350,7 @@
     position: relative;
     display: flex;
     align-items: center;
-    padding: 120px 50px 80px;
+    /*padding: 120px 50px 80px; */
     max-width: 1440px;
     margin: 0 auto;
     width: 100%;
@@ -358,26 +358,26 @@
   }
 
   .banner-content {
-    max-width: 500px;
+    max-width: 700px;
     z-index: 50;
     color: #000;
-    padding-left: 50px;
+    padding-top: 20%;
   }
 
   .banner-title {
-    font-size: 70px;
+    font-size: 60px;
     font-weight: 500;
     color: #000;
-    margin: 0 0 30px 0;
     line-height: 0.9;
     letter-spacing: -2px;
     font-family: var(--font-family-two);
+    margin: 20px 0;
   }
 
   .banner-description {
     font-size: 17px;
     color: #333;
-    margin: 0 0 40px 0;
+    margin: 0 0 30px 0;
     line-height: 1.5;
     max-width: 400px;
     font-family: var(--font-family-two);
@@ -416,16 +416,20 @@
 
   .banner-footer {
     position: absolute;
-    bottom: 2rem;
+    bottom: 0;
     left: 50%;
     transform: translateX(-50%);
-    font-size: 0.9rem;
-    color: #666;
+    font-size: 1rem;
+    color: #000000;
     text-align: center;
     z-index: 50;
     letter-spacing: 1px;
-    font-weight: 500;
+    font-weight: 400;
     font-family: var(--font-family-two);
+    width: 100%;
+    background-color: #F5F5F5;
+    padding: 10px;
+    text-transform: uppercase;
   }
 
   /* Banner Illustration Images */
@@ -481,29 +485,43 @@
     }
 
     .banner-main {
-      padding: 6rem 4rem;
+      /*padding: 6rem 4rem; */
     }
   }
 
   /* Mobile Styles */
   @media (max-width: 767px) {
+    .nav-center-text {
+      display: none;
+    }
     .hamburger-menu {
       display: flex;
     }
-
+    .navbar-content {
+      display: flex;
+      justify-content: center;
+    }
+    .banner-button {
+     display: block;
+    }
     /* Hide CTA on small screens to keep navbar clean */
     .nav-button {
       display: none;
     }
+    .custom-gift-banner {
+      min-height: unset;
+    }
 
     .banner-main {
-      padding: 20px;
-      text-align: center;
-      min-height: calc(100vh - 50px);
+      /*padding: 20px;*/
+      text-align: top;
+      /*min-height: calc(100vh - 50px);*/
     }
 
     .banner-content {
       max-width: 100%;
+      background: #ffffff;
+      padding: 10% 5%;
     }
 
     .banner-title {
