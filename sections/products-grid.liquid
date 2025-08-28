@@ -22,7 +22,7 @@
   
   <div class="product-showcase__container page-width">
     {%- if heading != blank -%}
-      <h2 class="product-showcase__heading h1">
+      <h2 class="product-showcase__heading">
         {{ heading | escape }}
       </h2>
     {%- endif -%}
@@ -125,7 +125,7 @@
                     style="--hotspot-x: {{ block.settings.hotspot_x | default: 85 }}%; --hotspot-y: {{ block.settings.hotspot_y | default: 15 }}%;">
                     <span class="product-showcase__hotspot-indicator">
                       <svg class="product-showcase__hotspot-icon" width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
-                        <path d="M10 4V16M4 10H16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                        <path d="M10 4V16M4 10H16" stroke="#000000" stroke-width="2" stroke-linecap="round"/>
                       </svg>
                     </span>
                     <span class="product-showcase__hotspot-pulse"></span>
@@ -251,6 +251,8 @@
 <style>
   /* CSS Variables for Theming */
   .product-showcase {
+    --font-family-one:  "Lustria", serif;
+    --font-family-two:  "Jost", sans-serif;
     --showcase-bg: {{ section.settings.background_color | default: '#ffffff' }};
     --showcase-text: #1a1a1a;
     --showcase-text-light: #666666;
@@ -258,9 +260,9 @@
     --showcase-accent: #000000;
     --modal-bg: #ffffff;
     --modal-overlay: rgba(0, 0, 0, 0.75);
-    --hotspot-bg: rgba(0, 0, 0, 0.8);
-    --hotspot-hover: rgba(0, 0, 0, 0.95);
-    --tisso-radius: 12px;
+    --hotspot-bg: rgba(248, 248, 248, 0.9);
+    --hotspot-hover: rgba(255, 255, 255, 0.95);
+    --tisso-radius: 0;
     --tisso-transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
   }
 
@@ -288,31 +290,32 @@
 
   /* Heading */
   .product-showcase__heading {
-    margin: 0 0 40px;
+    margin: 0;
     font-size: clamp(24px, 4vw, 36px);
-    font-weight: 600;
+    font-weight: 400;
     line-height: 1.2;
     color: var(--showcase-text);
-    text-align: center;
+    font-family: var(--font-family-one);
+    padding-bottom: 30px;
   }
 
   /* Grid Layout */
   .product-showcase__grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-    gap: 24px;
+    gap: 20px;
   }
 
   @media screen and (min-width: 750px) {
     .product-showcase__grid {
       grid-template-columns: repeat(3, 1fr);
-      gap: 32px;
+      gap: 20px;
     }
   }
 
   @media screen and (min-width: 990px) {
     .product-showcase__grid {
-      gap: 40px;
+      gap: 20px;
     }
   }
 
@@ -326,7 +329,7 @@
 
   .product-showcase__item-wrapper {
     position: relative;
-    aspect-ratio: 3 / 4;
+    aspect-ratio: 1 / 1;
     overflow: hidden;
   }
 
@@ -365,7 +368,7 @@
   .product-showcase__placeholder--empty {
     background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
     border: 2px dashed #dee2e6;
-    border-radius: var(--tisso-radius);
+    /*border-radius: var(--tisso-radius);*/
     transition: var(--tisso-transition);
   }
 
@@ -410,7 +413,7 @@
     right: 16px;
     background: rgba(255, 255, 255, 0.95);
     backdrop-filter: blur(8px);
-    border-radius: 8px;
+    /*border-radius: 8px;*/
     padding: 12px 16px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
     opacity: 0;
@@ -472,7 +475,7 @@
     padding: 60px 20px;
     background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
     border: 2px dashed #dee2e6;
-    border-radius: var(--tisso-radius);
+    /*border-radius: var(--tisso-radius);*/
   }
 
   .product-showcase__empty-state p {
@@ -487,10 +490,10 @@
     left: var(--hotspot-x);
     top: var(--hotspot-y);
     transform: translate(-50%, -50%);
-    width: 40px;
-    height: 40px;
+    width: 25px;
+    height: 25px;
     padding: 0;
-    border: 2px solid rgba(255, 255, 255, 0.9);
+    border: 1px solid rgba(255, 255, 255, 0.7);
     border-radius: 50%;
     background: var(--hotspot-bg);
     color: white;
@@ -521,8 +524,8 @@
   }
 
   .product-showcase__hotspot-icon {
-    width: 20px;
-    height: 20px;
+    width: 15px;
+    height: 15px;
   }
 
   .product-showcase__hotspot-pulse {
@@ -726,7 +729,7 @@
     height: auto;
     max-height: 300px;
     object-fit: cover;
-    border-radius: 8px;
+    /*border-radius: 8px;*/
   }
 
   @media screen and (min-width: 750px) {
