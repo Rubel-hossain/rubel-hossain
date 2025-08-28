@@ -13,13 +13,13 @@
   assign money_format = shop.money_format | escape
 -%}
 
-<section
-  id="product-showcase-{{ section_id }}"
+<section 
+  id="product-showcase-{{ section_id }}" 
   class="product-showcase"
   data-section-id="{{ section_id }}"
   data-section-type="product-showcase"
-  data-money-format="{{ money_format }}"
->
+  data-money-format="{{ shop.money_format | escape }}">
+  
   <div class="product-showcase__container page-width">
     {%- if heading != blank -%}
       <h2 class="product-showcase__heading h1">
@@ -31,7 +31,7 @@
       {%- if product_source == 'collection' and collection_handle != blank -%}
         {%- comment -%} Fetch the collection object from the handle {%- endcomment -%}
         {%- assign collection_obj = collections[collection_handle] -%}
-
+        
         {%- if collection_obj != blank and collection_obj.products.size > 0 -%}
           {%- assign collection_products = collection_obj.products -%}
           {%- for product in collection_products limit: max_products -%}
@@ -56,24 +56,16 @@
           {%- if displayed_blocks < max_products -%}
             {%- assign product_obj = block.settings.product -%}
             {%- assign image = block.settings.image -%}
-
+            
             {%- comment -%} Always render the block, even if no product is selected {%- endcomment -%}
-
+            
             <div class="product-showcase__item" {{ block.shopify_attributes }}>
               <div class="product-showcase__item-wrapper">
                 {%- if product_obj == blank -%}
                   {%- comment -%} No product selected - show placeholder {%- endcomment -%}
                   <div class="product-showcase__placeholder product-showcase__placeholder--empty">
                     <div class="product-showcase__placeholder-content">
-                      <svg
-                        width="48"
-                        height="48"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        stroke-width="1"
-                        class="product-showcase__placeholder-icon"
-                      >
+                      <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" class="product-showcase__placeholder-icon">
                         <circle cx="12" cy="12" r="10"/>
                         <line x1="12" y1="8" x2="12" y2="16"/>
                         <line x1="8" y1="12" x2="16" y2="12"/>
@@ -87,42 +79,36 @@
                   {%- if image != blank -%}
                     {%- assign image_alt = block.settings.image_alt | default: product_obj.title | escape -%}
                     <picture class="product-showcase__picture">
-                      <source
+                      <source 
                         media="(max-width: 749px)"
-                        srcset="{{ image | image_url: width: 600 }} 1x, {{ image | image_url: width: 1200 }} 2x"
-                      >
-                      <source
+                        srcset="{{ image | image_url: width: 600 }} 1x, {{ image | image_url: width: 1200 }} 2x">
+                      <source 
                         media="(min-width: 750px)"
-                        srcset="{{ image | image_url: width: 800 }} 1x, {{ image | image_url: width: 1600 }} 2x"
-                      >
-                      <img
+                        srcset="{{ image | image_url: width: 800 }} 1x, {{ image | image_url: width: 1600 }} 2x">
+                      <img 
                         class="product-showcase__image"
                         src="{{ image | image_url: width: 800 }}"
                         alt="{{ image_alt }}"
                         loading="lazy"
                         width="800"
-                        height="1067"
-                      >
+                        height="1067">
                     </picture>
                   {%- elsif product_obj.featured_image != blank -%}
                     {%- comment -%} Use product image if no custom image is set {%- endcomment -%}
                     <picture class="product-showcase__picture">
-                      <source
+                      <source 
                         media="(max-width: 749px)"
-                        srcset="{{ product_obj.featured_image | image_url: width: 600 }} 1x, {{ product_obj.featured_image | image_url: width: 1200 }} 2x"
-                      >
-                      <source
+                        srcset="{{ product_obj.featured_image | image_url: width: 600 }} 1x, {{ product_obj.featured_image | image_url: width: 1200 }} 2x">
+                      <source 
                         media="(min-width: 750px)"
-                        srcset="{{ product_obj.featured_image | image_url: width: 800 }} 1x, {{ product_obj.featured_image | image_url: width: 1600 }} 2x"
-                      >
-                      <img
+                        srcset="{{ product_obj.featured_image | image_url: width: 800 }} 1x, {{ product_obj.featured_image | image_url: width: 1600 }} 2x">
+                      <img 
                         class="product-showcase__image"
                         src="{{ product_obj.featured_image | image_url: width: 800 }}"
                         alt="{{ product_obj.title | escape }}"
                         loading="lazy"
                         width="800"
-                        height="1067"
-                      >
+                        height="1067">
                     </picture>
                   {%- else -%}
                     <div class="product-showcase__placeholder">
@@ -131,44 +117,20 @@
                     </div>
                   {%- endif -%}
 
-                  <button
+                  <button 
                     type="button"
                     class="product-showcase__hotspot"
                     aria-label="View {{ product_obj.title | escape }}"
                     data-product-handle="{{ product_obj.handle | escape }}"
-                    style="--hotspot-x: {{ block.settings.hotspot_x | default: 85 }}%; --hotspot-y: {{ block.settings.hotspot_y | default: 15 }}%;"
-                  >
+                    style="--hotspot-x: {{ block.settings.hotspot_x | default: 85 }}%; --hotspot-y: {{ block.settings.hotspot_y | default: 15 }}%;">
                     <span class="product-showcase__hotspot-indicator">
-                      <svg
-                        class="product-showcase__hotspot-icon"
-                        aria-hidden="true"
-                        width="48"
-                        height="48"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        xmlns="http://www.w3.org/2000/svg"
-                      >
-                        <g filter="url(#filter0_d_5_3060)">
-                        <circle cx="11.8571" cy="8.85714" r="7.85714" fill="#F8F8F8" fill-opacity="0.9"/>
-                        <path d="M12.1045 6.02985V12.0738" stroke="black" stroke-linecap="square" stroke-linejoin="round"/>
-                        <path d="M9.08252 9.05182H15.1265" stroke="black" stroke-linecap="square" stroke-linejoin="round"/>
-                        </g>
-                        <defs>
-                        <filter id="filter0_d_5_3060" x="0" y="0" width="23.7144" height="23.7143" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
-                        <feFlood flood-opacity="0" result="BackgroundImageFix"/>
-                        <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
-                        <feGaussianBlur stdDeviation="2"/>
-                        <feComposite in2="hardAlpha" operator="out"/>
-                        <feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.2 0"/>
-                        <feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_5_3060"/>
-                        <feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_5_3060" result="shape"/>
-                        </filter>
-                        </defs>
+                      <svg class="product-showcase__hotspot-icon" width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+                        <path d="M10 4V16M4 10H16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
                       </svg>
                     </span>
                     <span class="product-showcase__hotspot-pulse"></span>
                   </button>
-
+                  
                   {%- comment -%} Product info overlay for theme editor {%- endcomment -%}
                   <div class="product-showcase__product-info">
                     <span class="product-showcase__product-title">{{ product_obj.title }}</span>
@@ -177,7 +139,7 @@
                 {%- endif -%}
               </div>
             </div>
-
+            
             {%- assign displayed_blocks = displayed_blocks | plus: 1 -%}
           {%- endif -%}
         {%- endfor -%}
@@ -186,24 +148,23 @@
   </div>
 
   {%- comment -%} Product Modal {%- endcomment -%}
-  <div
+  <div 
     class="product-modal"
     id="product-modal-{{ section_id }}"
     role="dialog"
     aria-modal="true"
     aria-labelledby="product-modal-title-{{ section_id }}"
     aria-hidden="true"
-    hidden
-  >
+    hidden>
+    
     <div class="product-modal__overlay" data-modal-close></div>
-
+    
     <div class="product-modal__dialog">
-      <button
+      <button 
         type="button"
         class="product-modal__close-button"
         aria-label="Close"
-        data-modal-close
-      >
+        data-modal-close>
         <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
           <path d="M15 5L5 15M5 5L15 15" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
         </svg>
@@ -218,9 +179,10 @@
       </div>
 
       <div class="product-modal__content" data-content-state hidden>
-        <div class="product-modal__media">
+        <!-- Compact header: thumbnail on the left, title/price/description on the right -->
+        <div class="product-modal__header">
           <img
-            class="product-modal__image"
+            class="product-modal__thumb product-modal__image"
             src=""
             alt=""
             loading="lazy"
@@ -228,68 +190,59 @@
             width="auto"
             height="auto"
           >
+
+          <div class="product-modal__summary">
+            <h3 class="product-modal__title" id="product-modal-title-{{ section_id }}"></h3>
+            <div class="product-modal__pricing">
+              <span class="product-modal__current-price" data-price-current></span>
+              <span class="product-modal__compare-price" data-price-compare hidden></span>
+            </div>
+            <div class="product-modal__description" data-description></div>
+          </div>
         </div>
 
-        <div class="product-modal__details">
-          <h3 class="product-modal__title" id="product-modal-title-{{ section_id }}"></h3>
+        <!-- Options and Add to Cart -->
+        <form class="product-modal__form" data-product-form>
+          <div class="product-modal__options">
+            <!-- Color options row -->
+            <div class="product-modal__color-selector" data-color-selector style="display: none;">
+              <label class="product-modal__option-label">Color</label>
+              <div class="product-modal__color-options" data-color-options></div>
+            </div>
 
-          <div class="product-modal__pricing">
-            <span class="product-modal__current-price" data-price-current></span>
-            <span class="product-modal__compare-price" data-price-compare hidden></span>
+            <!-- Size options -->
+            <div class="product-modal__size-selector" data-size-selector style="display: none;">
+              <label class="product-modal__option-label">Size</label>
+              <div class="product-modal__size-select-wrapper">
+                <select class="product-modal__size-select" data-size-select>
+                  <option value="">Choose your size</option>
+                </select>
+                <svg class="product-modal__select-arrow" width="12" height="8" viewBox="0 0 12 8" fill="none">
+                  <path d="M1 1L6 6L11 1" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </div>
+            </div>
+
+            <!-- Other dynamic options container -->
+            <div class="product-modal__dynamic-options" data-options-container></div>
           </div>
 
-          <div class="product-modal__description" data-description></div>
+          <input type="hidden" name="id" value="" data-variant-id>
 
-          <form class="product-modal__form" data-product-form>
-            <div class="product-modal__options">
-              <!-- Color options -->
-              <div class="product-modal__color-selector" data-color-selector style="display: none;">
-                <label class="product-modal__option-label">Color</label>
-                <div class="product-modal__color-options" data-color-options></div>
-              </div>
-
-              <!-- Size options -->
-              <div class="product-modal__size-selector" data-size-selector style="display: none;">
-                <label class="product-modal__option-label">Size</label>
-                <div class="product-modal__size-select-wrapper">
-                  <select class="product-modal__size-select" data-size-select>
-                    <option value="">Choose your size</option>
-                  </select>
-                  <svg class="product-modal__select-arrow" width="12" height="8" viewBox="0 0 12 8" fill="none">
-                    <path d="M1 1L6 6L11 1" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                  </svg>
-                </div>
-              </div>
-
-              <!-- Other dynamic options container -->
-              <div class="product-modal__dynamic-options" data-options-container></div>
-            </div>
-
-            <input type="hidden" name="id" value="" data-variant-id>
-
-            <div class="product-modal__add-to-cart">
-              <button
-                type="submit"
-                class="product-modal__add-to-cart-button"
-                data-add-to-cart
-                disabled
-              >
-                <span data-btn-text>ADD TO CART</span>
-                <span data-btn-loading hidden>Adding...</span>
-                <svg
-                  class="product-modal__btn-arrow"
-                  width="20"
-                  height="20"
-                  viewBox="0 0 20 20"
-                  fill="none"
-                  aria-hidden="true"
-                >
-                  <path d="M7 5L12 10L7 15" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
-              </button>
-            </div>
-          </form>
-        </div>
+          <div class="product-modal__add-to-cart">
+            <button
+              type="submit"
+              class="product-modal__add-to-cart-button"
+              data-add-to-cart
+              disabled>
+              <span data-btn-text>ADD TO CART</span>
+              <span data-btn-loading hidden>Adding...</span>
+              <svg class="product-modal__btn-arrow" width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+                <path d="M7 5L12 10L7 15" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </button>
+          </div>
+        </form>
       </div>
     </div>
   </div>
@@ -327,7 +280,7 @@
     .product-showcase {
       padding: 80px 0;
     }
-
+    
     .product-showcase__container {
       padding: 0 50px;
     }
@@ -739,13 +692,13 @@
       align-items: flex-start;
       padding-top: 20px;
     }
-
+    
     .product-modal__dialog {
       max-height: calc(100vh - 40px);
       width: 100%;
       margin: 0;
     }
-
+    
     .product-modal__content {
       max-height: calc(100vh - 40px);
       overflow-y: auto;
@@ -773,6 +726,7 @@
     height: auto;
     max-height: 300px;
     object-fit: cover;
+    border-radius: 8px;
   }
 
   @media screen and (min-width: 750px) {
@@ -864,16 +818,16 @@
   .product-modal__option-label {
     display: block;
     margin-bottom: 8px;
-    font-size: 14px;
-    font-weight: 500;
-    color: var(--modal-text);
+    font-size: 12px;
+    font-weight: 600;
+    color: #1a1a1a;
     text-transform: uppercase;
     letter-spacing: 0.5px;
   }
 
   /* Color Selector */
   .product-modal__color-selector {
-    margin-bottom: 20px;
+    margin-bottom: 16px;
   }
 
   .product-modal__color-options {
@@ -883,26 +837,27 @@
   }
 
   .product-modal__color-option {
-    width: 60px;
+    min-width: 80px;
     height: 40px;
-    border: 2px solid #e0e0e0;
+    padding: 0 12px;
+    border: 1px solid #e0e0e0;
     border-radius: 4px;
     cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 12px;
-    font-weight: 400;
+    font-size: 13px;
+    font-weight: 500;
     text-transform: capitalize;
     transition: all 0.2s ease;
     background: white;
-    color: var(--modal-text);
+    color: #1a1a1a;
   }
 
   .product-modal__color-option.selected {
-    border-color: var(--modal-text);
-    background: var(--modal-text);
-    color: white;
+    border-color: #1a1a1a;
+    background: #1a1a1a;
+    color: white !important;
   }
 
   .product-modal__color-option:hover {
@@ -912,7 +867,7 @@
   /* Size Selector */
   .product-modal__size-selector {
     position: relative;
-    margin-bottom: 20px;
+    margin-bottom: 16px;
   }
 
   .product-modal__size-select {
@@ -933,7 +888,7 @@
   .product-modal__size-select:focus {
     border-color: var(--modal-text);
   }
-
+  
   .product-modal__size-select-wrapper {
     position: relative;
   }
@@ -1134,73 +1089,168 @@
       margin: 12px;
       max-height: calc(100vh - 40px);
     }
-
+    
     .product-modal__content {
       flex-direction: column;
       max-height: calc(100vh - 40px);
     }
-
+    
     .product-modal__media {
       width: 100%;
       padding: 16px;
       flex-shrink: 0;
     }
-
+    
     .product-modal__image {
       max-height: 250px;
       width: 100%;
       object-fit: cover;
     }
-
+    
     .product-modal__details {
       padding: 16px;
       justify-content: flex-start;
       overflow-y: visible;
     }
-
+    
     .product-modal__title {
       font-size: 20px;
       margin-bottom: 12px;
     }
-
+    
     .product-modal__pricing {
       margin-bottom: 16px;
     }
-
+    
     .product-modal__current-price {
       font-size: 18px;
     }
-
+    
     .product-modal__description {
       margin-bottom: 16px;
       font-size: 14px;
       line-height: 1.5;
     }
-
+    
     .product-modal__form {
       gap: 16px;
     }
-
+    
     .product-modal__options {
       gap: 12px;
     }
-
+    
     .product-modal__color-option {
       width: 45px;
       height: 32px;
       font-size: 11px;
     }
-
+    
     .product-modal__size-select {
       font-size: 14px;
       padding: 12px 16px;
     }
-
+    
     .product-modal__add-to-cart {
       padding: 14px 24px;
       font-size: 13px;
       min-height: 48px;
     }
+  }
+  /* Compact modal overrides for header layout and color buttons */
+  .product-modal__dialog {
+    border: 1px solid var(--showcase-border);
+    border-radius: 12px;
+    background: #fff;
+  }
+
+  /* Force single-column flow for the content body */
+  .product-modal__content {
+    display: block;
+    max-height: none;
+  }
+
+  .product-modal__header {
+    display: flex;
+    gap: 16px;
+    align-items: flex-start;
+    padding: 20px;
+    border-bottom: 1px solid var(--showcase-border);
+  }
+
+  .product-modal__thumb {
+    width: 120px;
+    height: 140px;
+    object-fit: cover;
+    border-radius: 8px;
+    background: #f6f6f6;
+    flex-shrink: 0;
+  }
+
+  .product-modal__summary {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .product-modal__title {
+    font-weight: 600;
+    font-size: clamp(18px, 2.2vw, 22px);
+    margin: 0 0 6px;
+    color: #111;
+  }
+
+  .product-modal__pricing {
+    margin: 0 0 8px;
+    gap: 8px;
+  }
+
+  .product-modal__current-price { font-weight: 600; }
+
+  .product-modal__description {
+    font-size: 14px;
+    line-height: 1.2;
+    color: var(--showcase-text-light);
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 4; /* clamp to 4 lines */
+    overflow: hidden;
+  }
+
+  .product-modal__form { padding: 20px; }
+
+  .product-modal__color-options { display: flex; gap: 10px; flex-wrap: wrap; }
+
+  .product-modal__color-option {
+    min-width: 90px;
+    height: 40px;
+    padding: 8px 12px;
+    border: 1px solid #e5e7eb;
+    border-left: 3px solid var(--swatch, #9ca3af);
+    border-radius: 6px;
+    background: #fff;
+    color: #111;
+    font-size: 13px;
+    font-weight: 500;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  .product-modal__color-option:hover { border-color: #9ca3af; }
+
+  .product-modal__color-option.selected {
+    border-left-width: 5px;
+    box-shadow: 0 0 0 1px #111 inset;
+  }
+
+  .product-modal__size-selector { margin-top: 6px; }
+
+  @media screen and (max-width: 480px) {
+    .product-modal__header { padding: 16px; }
+    .product-modal__thumb { width: 100px; height: 120px; }
+    .product-modal__form { padding: 16px; }
   }
 </style>
 
@@ -1210,11 +1260,11 @@
       this.section = section;
       this.sectionId = section.dataset.sectionId;
       this.modal = section.querySelector('.product-modal');
-
+      
       if (!this.modal) {
         return;
       }
-
+      
       this.elements = {
         loadingState: this.modal.querySelector('[data-loading-state]'),
         errorState: this.modal.querySelector('[data-error-state]'),
@@ -1229,35 +1279,35 @@
         submitButton: this.modal.querySelector('[data-add-to-cart]'),
         buttonText: this.modal.querySelector('[data-btn-text]'),
         buttonLoading: this.modal.querySelector('[data-btn-loading]'),
-        form: this.modal.querySelector('[data-product-form]'),
+        form: this.modal.querySelector('[data-product-form]')
       };
-
+      
       // Validate critical elements
       const criticalElements = ['loadingState', 'errorState', 'contentState', 'modalTitle'];
-      const missingElements = criticalElements.filter((key) => !this.elements[key]);
-
+      const missingElements = criticalElements.filter(key => !this.elements[key]);
+      
       if (missingElements.length > 0) {
         return;
       }
-
+      
       this.currentProduct = null;
       this.selectedOptions = {};
       this.isSubmitting = false;
-
+      
       this.init();
     }
-
+    
     init() {
       // Find all hotspots
       const hotspots = this.section.querySelectorAll('.product-showcase__hotspot');
-
+      
       // Hotspot click handlers
       hotspots.forEach((hotspot, index) => {
         const handle = hotspot.dataset.productHandle;
-
+        
         hotspot.addEventListener('click', (e) => {
           e.preventDefault();
-
+          
           if (handle && handle.trim() !== '') {
             this.loadProduct(handle.trim());
           } else {
@@ -1265,19 +1315,19 @@
           }
         });
       });
-
+      
       // Modal close handlers
-      this.modal.querySelectorAll('[data-modal-close]').forEach((element) => {
+      this.modal.querySelectorAll('[data-modal-close]').forEach(element => {
         element.addEventListener('click', () => this.closeModal());
       });
-
+      
       // Escape key handler
       document.addEventListener('keydown', (e) => {
         if (e.key === 'Escape' && !this.modal.hidden) {
           this.closeModal();
         }
       });
-
+      
       // Form submit handler
       if (this.elements.form) {
         this.elements.form.addEventListener('submit', (e) => {
@@ -1286,18 +1336,44 @@
         });
       }
     }
-
+    
     formatMoney(cents) {
-      if (!cents && cents !== 0) return '$0.00';
-
       try {
-        const amount = (parseFloat(cents) / 100).toFixed(2);
-        return '$' + amount;
+        // Ensure cents is a valid number
+        const centAmount = parseInt(cents, 10);
+        if (isNaN(centAmount)) {
+          return 'Price unavailable';
+        }
+
+        // Try to use Shopify's formatMoney function first
+        if (window.Shopify && typeof window.Shopify.formatMoney === 'function') {
+          const moneyFormat = this.section.dataset.moneyFormat;
+          if (moneyFormat) {
+            return window.Shopify.formatMoney(centAmount, moneyFormat);
+          } else {
+            return window.Shopify.formatMoney(centAmount);
+          }
+        }
+        
+        // Fallback: Get money format from section data or use default
+        const moneyFormat = this.section.dataset.moneyFormat || '${{amount}}';
+        const amount = (centAmount / 100).toFixed(2);
+        
+        // Handle different money format patterns
+        let formatted = moneyFormat;
+        formatted = formatted.replace(/\{\{\s*amount\s*\}\}/g, amount);
+        formatted = formatted.replace(/\{\{\s*amount_no_decimals\s*\}\}/g, Math.round(centAmount / 100));
+        formatted = formatted.replace(/\{\{\s*amount_with_comma_separator\s*\}\}/g, amount.replace('.', ','));
+        
+        return formatted;
       } catch (error) {
-        return '$0.00';
+        console.error('Error formatting money:', error);
+        // Last resort fallback
+        const amount = (parseInt(cents, 10) / 100).toFixed(2);
+        return `$${amount}`;
       }
     }
-
+    
     showState(state) {
       // Hide all states
       const allStates = [this.elements.loadingState, this.elements.errorState, this.elements.contentState];
@@ -1307,26 +1383,26 @@
           el.style.display = 'none';
         }
       });
-
+      
       // Show target state
       if (state) {
         state.hidden = false;
         state.style.display = 'block';
       }
     }
-
+    
     openModal() {
       this.modal.hidden = false;
       this.modal.setAttribute('aria-hidden', 'false');
       document.body.classList.add('product-modal-open');
-
+      
       // Focus management
       setTimeout(() => {
-        const closeBtn = this.modal.querySelector('.product-modal__close');
+        const closeBtn = this.modal.querySelector('.product-modal__close-button');
         if (closeBtn) closeBtn.focus();
       }, 100);
     }
-
+    
     closeModal() {
       this.modal.hidden = true;
       this.modal.setAttribute('aria-hidden', 'true');
@@ -1335,7 +1411,7 @@
       this.currentProduct = null;
       this.selectedOptions = {};
     }
-
+    
     async loadProduct(handle) {
       if (!handle || handle.trim() === '') {
         this.showError('No product selected. Please assign a product to this item.');
@@ -1344,62 +1420,61 @@
 
       this.openModal();
       this.showState(this.elements.loadingState);
-
+      
       try {
         // Clean the handle and construct URL
         const cleanHandle = handle.trim();
         const productUrl = `/products/${cleanHandle}.js`;
-
+        
         const response = await fetch(productUrl, {
           method: 'GET',
           headers: {
-            Accept: 'application/json',
-            'Content-Type': 'application/json',
-          },
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+          }
         });
-
+        
         if (!response.ok) {
           if (response.status === 404) {
-            throw new Error(
-              `Product "${cleanHandle}" not found. Please check the product handle or ensure the product is published.`
-            );
+            throw new Error(`Product "${cleanHandle}" not found. Please check the product handle or ensure the product is published.`);
           } else {
             throw new Error(`Failed to load product (${response.status}). Please try again.`);
           }
         }
-
+        
         const product = await response.json();
-
+        
         // Enhanced validation
         if (!product || typeof product !== 'object') {
           throw new Error('Invalid product data format received');
         }
-
+        
         if (!product.id) {
           throw new Error('Product data missing ID');
         }
-
+        
         if (!product.title) {
           throw new Error('Product data missing title');
         }
-
+        
         // Check variants more thoroughly
         if (!product.variants || !Array.isArray(product.variants) || product.variants.length === 0) {
           throw new Error('Product has no available variants');
         }
-
+        
         // Validate at least one variant has required data
-        const validVariant = product.variants.find((v) => v && v.id && typeof v.price !== 'undefined');
+        const validVariant = product.variants.find(v => v && v.id && typeof v.price !== 'undefined');
         if (!validVariant) {
           throw new Error('Product variants missing required data');
         }
-
+        
         this.renderProduct(product);
+        
       } catch (error) {
         this.showError(error.message || 'Failed to load product. Please try again or contact support.');
       }
     }
-
+    
     showError(message) {
       this.showState(this.elements.errorState);
       const errorElement = this.elements.errorState.querySelector('p');
@@ -1407,51 +1482,51 @@
         errorElement.textContent = message;
       }
     }
-
+    
     validateProduct(product) {
       if (!product || typeof product !== 'object') {
         return false;
       }
-
+      
       if (!product.title) {
         return false;
       }
-
+      
       if (!product.variants || !Array.isArray(product.variants) || product.variants.length === 0) {
         return false;
       }
-
+      
       // Validate at least one variant has required properties
-      const validVariants = product.variants.filter((variant) => {
+      const validVariants = product.variants.filter(variant => {
         return variant && variant.id && typeof variant.price !== 'undefined';
       });
-
+      
       if (validVariants.length === 0) {
         return false;
       }
-
+      
       return true;
     }
 
     renderProduct(product) {
       this.currentProduct = product;
-
+      
       // Validate elements exist
       if (!this.elements.modalTitle) {
         this.showError('Modal setup error - missing title element');
         return;
       }
-
+      
       // Set basic product info
       this.elements.modalTitle.textContent = product.title || 'Product';
-
+      
       // Set description
       if (this.elements.descriptionElement) {
         const description = (product.description || '').replace(/<[^>]*>/g, '').trim();
-        this.elements.descriptionElement.textContent =
-          description.length > 200 ? description.substring(0, 200) + '...' : description;
+        // Leave full text; CSS will clamp to 4 lines for readability
+        this.elements.descriptionElement.textContent = description;
       }
-
+      
       // Set product image
       if (this.elements.modalImage) {
         const imageUrl = this.getProductImageUrl(product);
@@ -1463,27 +1538,36 @@
           this.elements.modalImage.style.display = 'none';
         }
       }
-
+      
       // Initialize options containers
       this.selectedOptions = {};
-
+      
       // Get the option selectors
       const colorSelector = this.modal.querySelector('[data-color-selector]');
       const sizeSelector = this.modal.querySelector('[data-size-selector]');
       const dynamicContainer = this.modal.querySelector('[data-options-container]');
-
+      
       // Hide all selectors initially
       if (colorSelector) colorSelector.style.display = 'none';
       if (sizeSelector) sizeSelector.style.display = 'none';
       if (dynamicContainer) dynamicContainer.innerHTML = '';
-
+      
       // Set up first available variant
-      const firstVariant = product.variants.find((v) => v.available) || product.variants[0];
-
+      const firstVariant = product.variants.find(v => v.available) || product.variants[0];
+      
       if (firstVariant && this.elements.priceCurrentElement) {
         this.elements.variantIdInput.value = firstVariant.id;
-        this.elements.priceCurrentElement.textContent = this.formatMoney(firstVariant.price);
-
+        // Use innerHTML for proper currency formatting
+        this.elements.priceCurrentElement.innerHTML = this.formatMoney(firstVariant.price);
+        
+        // Handle compare price for first variant
+        if (firstVariant.compare_at_price && firstVariant.compare_at_price > firstVariant.price) {
+          this.elements.priceCompareElement.innerHTML = this.formatMoney(firstVariant.compare_at_price);
+          this.elements.priceCompareElement.hidden = false;
+        } else {
+          this.elements.priceCompareElement.hidden = true;
+        }
+        
         if (this.elements.submitButton) {
           this.elements.submitButton.disabled = !firstVariant.available;
         }
@@ -1491,61 +1575,61 @@
           this.elements.buttonText.textContent = firstVariant.available ? 'ADD TO CART' : 'SOLD OUT';
         }
       }
-
+      
       // Render options if product has them
       if (product.options && product.options.length > 1) {
         this.renderOptions(product);
       }
-
+      
       // Show content
       this.showState(this.elements.contentState);
     }
-
+    
     getProductImageUrl(product) {
       // Try multiple image sources
       if (product.featured_image) {
         return typeof product.featured_image === 'string' ? product.featured_image : product.featured_image.src;
       }
-
+      
       if (product.images && product.images.length > 0) {
         const firstImage = product.images[0];
         return typeof firstImage === 'string' ? firstImage : firstImage.src;
       }
-
+      
       if (product.image) {
         return typeof product.image === 'string' ? product.image : product.image.src;
       }
-
+      
       return null;
     }
-
+    
     renderOptions(product) {
       // Reset options
       this.selectedOptions = {};
-
+      
       // Get option selectors from modal directly
       const colorSelector = this.modal.querySelector('[data-color-selector]');
       const sizeSelector = this.modal.querySelector('[data-size-selector]');
       const dynamicContainer = this.modal.querySelector('[data-options-container]');
-
+      
       // Hide all option selectors initially
       if (colorSelector) colorSelector.style.display = 'none';
       if (sizeSelector) sizeSelector.style.display = 'none';
       if (dynamicContainer) dynamicContainer.innerHTML = '';
-
+      
       if (!product.options || product.options.length === 0) {
         // For products without options, select the first available variant
         if (product.variants && product.variants.length > 0) {
-          const firstAvailableVariant = product.variants.find((v) => v.available) || product.variants[0];
+          const firstAvailableVariant = product.variants.find(v => v.available) || product.variants[0];
           this.elements.variantIdInput.value = firstAvailableVariant.id;
         }
         return;
       }
-
+      
       product.options.forEach((option, index) => {
         const optionName = typeof option === 'string' ? option : option.name || option.public_name || '';
         if (!optionName) return;
-
+        
         // Get unique values for this option
         const values = this.getOptionValues(product, index);
         if (values.length <= 1) {
@@ -1555,13 +1639,13 @@
           }
           return; // Skip single-value options in UI
         }
-
+        
         // Handle Color options
         if (/color|colour/i.test(optionName) && colorSelector) {
           colorSelector.style.display = 'block';
           const colorOptions = colorSelector.querySelector('[data-color-options]');
           colorOptions.innerHTML = '';
-
+          
           values.forEach((value, i) => {
             const colorOption = document.createElement('button');
             colorOption.type = 'button';
@@ -1569,24 +1653,29 @@
             colorOption.textContent = value;
             colorOption.dataset.value = value;
             colorOption.dataset.optionIndex = index;
-
+            const swatch = this.resolveColor(value);
+            colorOption.style.setProperty('--swatch', swatch);
+            colorOption.setAttribute('aria-pressed', i === 0 ? 'true' : 'false');
+            
             if (i === 0) {
               colorOption.classList.add('selected');
               this.selectedOptions[index] = value;
             }
-
+            
             colorOption.addEventListener('click', () => {
-              // Remove selected class from all color options
-              colorOptions.querySelectorAll('.product-modal__color-option').forEach((opt) => {
+              // Remove selected state from all color options
+              colorOptions.querySelectorAll('.product-modal__color-option').forEach(opt => {
                 opt.classList.remove('selected');
+                opt.setAttribute('aria-pressed', 'false');
               });
-
+              
               // Add selected class to clicked option
               colorOption.classList.add('selected');
+              colorOption.setAttribute('aria-pressed', 'true');
               this.selectedOptions[index] = value;
               this.updateVariantSelection();
             });
-
+            
             colorOptions.appendChild(colorOption);
           });
         }
@@ -1595,14 +1684,14 @@
           sizeSelector.style.display = 'block';
           const sizeSelect = sizeSelector.querySelector('[data-size-select]');
           sizeSelect.innerHTML = '<option value="">Choose your size</option>';
-
-          values.forEach((value) => {
+          
+          values.forEach(value => {
             const option = document.createElement('option');
             option.value = value;
             option.textContent = value;
             sizeSelect.appendChild(option);
           });
-
+          
           sizeSelect.addEventListener('change', () => {
             if (sizeSelect.value) {
               this.selectedOptions[index] = sizeSelect.value;
@@ -1614,17 +1703,17 @@
         else {
           const group = document.createElement('div');
           group.className = 'product-modal__option-group';
-
+          
           const label = document.createElement('label');
           label.className = 'product-modal__option-label';
           label.textContent = optionName;
           group.appendChild(label);
-
+          
           const swatchContainer = document.createElement('div');
           swatchContainer.className = 'product-modal__option-swatches';
           swatchContainer.setAttribute('role', 'radiogroup');
           swatchContainer.setAttribute('aria-label', optionName);
-
+          
           values.forEach((value, i) => {
             const swatch = document.createElement('button');
             swatch.type = 'button';
@@ -1634,44 +1723,44 @@
             swatch.setAttribute('aria-checked', i === 0 ? 'true' : 'false');
             swatch.dataset.value = value;
             swatch.dataset.optionIndex = index;
-
+            
             if (i === 0) {
               this.selectedOptions[index] = value;
             }
-
+            
             swatch.addEventListener('click', () => {
               this.selectedOptions[index] = value;
-
+              
               // Update aria-checked
-              swatchContainer.querySelectorAll('.product-modal__swatch').forEach((s) => {
+              swatchContainer.querySelectorAll('.product-modal__swatch').forEach(s => {
                 s.setAttribute('aria-checked', 'false');
               });
               swatch.setAttribute('aria-checked', 'true');
-
+              
               this.updateVariantSelection();
             });
-
+            
             swatchContainer.appendChild(swatch);
           });
-
+          
           group.appendChild(swatchContainer);
           if (dynamicContainer) {
             dynamicContainer.appendChild(group);
           }
         }
       });
-
+      
       // Update variant selection after setting up options
       this.updateVariantSelection();
     }
-
+    
     getOptionValues(product, optionIndex) {
       if (!product || !product.variants || !Array.isArray(product.variants)) {
         return [];
       }
-
+      
       const values = new Set();
-      product.variants.forEach((variant) => {
+      product.variants.forEach(variant => {
         if (variant && typeof variant === 'object') {
           const value = variant[`option${optionIndex + 1}`];
           if (value !== null && value !== undefined && value !== '') {
@@ -1679,24 +1768,51 @@
           }
         }
       });
-      return Array.from(values).filter((value) => value); // Remove any falsy values
+      return Array.from(values).filter(value => value); // Remove any falsy values
     }
 
+    // Resolve a color name/value to a usable CSS color string for swatch borders
+    resolveColor(value) {
+      if (!value) return '#9ca3af';
+      const v = String(value).trim().toLowerCase();
+      // If already a valid css color format
+      if (/^#([0-9a-f]{3}|[0-9a-f]{6})$/.test(v) || /^rgb(a)?\(/.test(v) || /^hsl(a)?\(/.test(v)) {
+        return value;
+      }
+      const map = {
+        black: '#000000', white: '#ffffff', blue: '#1d4ed8', navy: '#1e3a8a',
+        lightblue: '#3b82f6', red: '#dc2626', green: '#16a34a', teal: '#14b8a6',
+        yellow: '#f59e0b', orange: '#f97316', pink: '#ec4899', purple: '#8b5cf6',
+        brown: '#6b4f4f', grey: '#9ca3af', gray: '#9ca3af', silver: '#c0c0c0',
+        gold: '#d4af37', beige: '#f5f5dc', cream: '#fffdd0', khaki: '#bdb76b',
+        burgundy: '#800020', maroon: '#7f1d1d'
+      };
+      if (map[v]) return map[v];
+      if (v.includes('blue')) return map.blue;
+      if (v.includes('navy')) return map.navy;
+      if (v.includes('black')) return map.black;
+      if (v.includes('white')) return map.white;
+      if (v.includes('red')) return map.red;
+      if (v.includes('green')) return map.green;
+      if (v.includes('yellow')) return map.yellow;
+      if (v.includes('orange')) return map.orange;
+      if (v.includes('pink')) return map.pink;
+      if (v.includes('purple')) return map.purple;
+      if (v.includes('grey') || v.includes('gray')) return map.grey;
+      return '#9ca3af';
+    }
+    
     findVariant() {
       if (!this.currentProduct || !this.currentProduct.variants || !Array.isArray(this.currentProduct.variants)) {
         return null;
       }
-
+      
       // If no options or no selected options, return first available variant
-      if (
-        !this.currentProduct.options ||
-        this.currentProduct.options.length === 0 ||
-        Object.keys(this.selectedOptions).length === 0
-      ) {
-        return this.currentProduct.variants.find((variant) => variant.available) || this.currentProduct.variants[0];
+      if (!this.currentProduct.options || this.currentProduct.options.length === 0 || Object.keys(this.selectedOptions).length === 0) {
+        return this.currentProduct.variants.find(variant => variant.available) || this.currentProduct.variants[0];
       }
-
-      return this.currentProduct.variants.find((variant) => {
+      
+      return this.currentProduct.variants.find(variant => {
         return this.currentProduct.options.every((option, index) => {
           const selectedValue = this.selectedOptions[index];
           if (!selectedValue) return true;
@@ -1704,26 +1820,27 @@
         });
       });
     }
-
+    
     updateVariantSelection() {
       const variant = this.findVariant();
-
+      
       if (variant) {
         this.elements.variantIdInput.value = variant.id;
-
+        
         // Update price with better error handling
         try {
           const priceText = this.formatMoney(variant.price);
-          this.elements.priceCurrentElement.textContent = priceText || 'Price unavailable';
+          // Use innerHTML to preserve currency symbols and formatting
+          this.elements.priceCurrentElement.innerHTML = priceText || 'Price unavailable';
         } catch (error) {
-          this.elements.priceCurrentElement.textContent = 'Price unavailable';
+          this.elements.priceCurrentElement.innerHTML = 'Price unavailable';
         }
-
+        
         // Compare price
         if (variant.compare_at_price && variant.compare_at_price > variant.price) {
           try {
             const comparePriceText = this.formatMoney(variant.compare_at_price);
-            this.elements.priceCompareElement.textContent = comparePriceText;
+            this.elements.priceCompareElement.innerHTML = comparePriceText;
             this.elements.priceCompareElement.hidden = false;
           } catch (error) {
             this.elements.priceCompareElement.hidden = true;
@@ -1731,16 +1848,16 @@
         } else {
           this.elements.priceCompareElement.hidden = true;
         }
-
+        
         // Update button state
         const isAvailable = variant.available !== false && variant.inventory_quantity !== 0;
         this.elements.submitButton.disabled = !isAvailable;
         this.elements.buttonText.textContent = isAvailable ? 'ADD TO CART' : 'SOLD OUT';
-
+        
         // Update image if variant has one
         if (variant.featured_image) {
-          const variantImageUrl =
-            typeof variant.featured_image === 'string' ? variant.featured_image : variant.featured_image.src;
+          const variantImageUrl = typeof variant.featured_image === 'string' ? 
+            variant.featured_image : variant.featured_image.src;
           if (variantImageUrl && this.elements.modalImage) {
             this.elements.modalImage.src = variantImageUrl;
             this.elements.modalImage.alt = this.currentProduct.title + ' - ' + variant.title;
@@ -1748,13 +1865,12 @@
         }
       } else {
         // If no variant found, try to find the first available one
-        const fallbackVariant =
-          this.currentProduct?.variants?.find((v) => v.available) || this.currentProduct?.variants?.[0];
-
+        const fallbackVariant = this.currentProduct?.variants?.find(v => v.available) || 
+                               this.currentProduct?.variants?.[0];
+        
         if (fallbackVariant) {
           this.elements.variantIdInput.value = fallbackVariant.id;
-          this.elements.priceCurrentElement.textContent =
-            this.formatMoney(fallbackVariant.price) || 'Price unavailable';
+          this.elements.priceCurrentElement.innerHTML = this.formatMoney(fallbackVariant.price) || 'Price unavailable';
           this.elements.submitButton.disabled = !fallbackVariant.available;
           this.elements.buttonText.textContent = fallbackVariant.available ? 'ADD TO CART' : 'SOLD OUT';
         } else {
@@ -1764,55 +1880,54 @@
         }
       }
     }
-
+    
     async handleAddToCart() {
       const variantId = this.elements.variantIdInput.value;
       const quantity = 1; // Fixed quantity since we removed the quantity selector
-
+      
       if (!variantId || this.elements.submitButton.disabled || this.isSubmitting) return;
-
+      
       this.isSubmitting = true;
       this.elements.submitButton.disabled = true;
       this.elements.buttonText.hidden = true;
       this.elements.buttonLoading.hidden = false;
-
+      
       try {
         const response = await fetch('/cart/add.js', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
-            Accept: 'application/json',
+            'Accept': 'application/json'
           },
           body: JSON.stringify({
             id: parseInt(variantId, 10),
-            quantity: quantity,
-          }),
+            quantity: quantity
+          })
         });
-
+        
         if (!response.ok) throw new Error('Failed to add to cart');
-
+        
         const item = await response.json();
-
+        
         // Success - close modal and dispatch event
         this.closeModal();
-
+        
         // Dispatch custom event for cart updates
-        document.dispatchEvent(
-          new CustomEvent('cart:item-added', {
-            detail: { item, quantity },
-          })
-        );
-
+        document.dispatchEvent(new CustomEvent('cart:item-added', {
+          detail: { item, quantity }
+        }));
+        
         // Update cart drawer if it exists
         if (window.Shopify && window.Shopify.theme && window.Shopify.theme.jsCart) {
           window.Shopify.theme.jsCart.refresh();
         }
+        
       } catch (error) {
         // Show error message
         this.elements.buttonText.textContent = 'Error - Try again';
         this.elements.buttonText.hidden = false;
         this.elements.buttonLoading.hidden = true;
-
+        
         setTimeout(() => {
           this.updateVariantSelection();
         }, 2000);
@@ -1824,21 +1939,22 @@
         }
       }
     }
-  }
 
+  }
+  
   // Initialize when DOM is ready
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', initProductShowcase);
   } else {
     initProductShowcase();
   }
-
+  
   function initProductShowcase() {
     document.querySelectorAll('.product-showcase').forEach((section) => {
       new ProductShowcaseModal(section);
     });
   }
-
+  
   // Reinitialize on section reload (Theme Editor)
   document.addEventListener('shopify:section:load', (event) => {
     const section = event.target.querySelector('.product-showcase');

@@ -1,14 +1,6 @@
 {% comment %}
   Snippet: grid-product-item
   Renders a single product item for the Products Grid View section
-
-  Parameters:
-  - product: Product object
-  - image: Optional custom image to use instead of product image
-  - hotspot_x: Horizontal position of hotspot (%)
-  - hotspot_y: Vertical position of hotspot (%)
-  - section_id: The parent section ID for modal linking
-  - block_attributes: Optional Shopify block attributes for theme editor
 {% endcomment %}
 
 {%- liquid
@@ -24,15 +16,7 @@
       {%- comment -%} No product selected - show placeholder {%- endcomment -%}
       <div class="product-showcase__placeholder product-showcase__placeholder--empty">
         <div class="product-showcase__placeholder-content">
-          <svg
-            width="48"
-            height="48"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="1"
-            class="product-showcase__placeholder-icon"
-          >
+          <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" class="product-showcase__placeholder-icon">
             <circle cx="12" cy="12" r="10"/>
             <line x1="12" y1="8" x2="12" y2="16"/>
             <line x1="8" y1="12" x2="16" y2="12"/>
@@ -46,42 +30,36 @@
       {%- if custom_image != blank -%}
         {%- assign image_alt = image_alt | default: product_obj.title | escape -%}
         <picture class="product-showcase__picture">
-          <source
+          <source 
             media="(max-width: 749px)"
-            srcset="{{ custom_image | image_url: width: 600 }} 1x, {{ custom_image | image_url: width: 1200 }} 2x"
-          >
-          <source
+            srcset="{{ custom_image | image_url: width: 600 }} 1x, {{ custom_image | image_url: width: 1200 }} 2x">
+          <source 
             media="(min-width: 750px)"
-            srcset="{{ custom_image | image_url: width: 800 }} 1x, {{ custom_image | image_url: width: 1600 }} 2x"
-          >
-          <img
+            srcset="{{ custom_image | image_url: width: 800 }} 1x, {{ custom_image | image_url: width: 1600 }} 2x">
+          <img 
             class="product-showcase__image"
             src="{{ custom_image | image_url: width: 800 }}"
             alt="{{ image_alt }}"
             loading="lazy"
             width="800"
-            height="1067"
-          >
+            height="1067">
         </picture>
       {%- elsif product_obj.featured_image != blank -%}
         {%- comment -%} Use product image if no custom image is set {%- endcomment -%}
         <picture class="product-showcase__picture">
-          <source
+          <source 
             media="(max-width: 749px)"
-            srcset="{{ product_obj.featured_image | image_url: width: 600 }} 1x, {{ product_obj.featured_image | image_url: width: 1200 }} 2x"
-          >
-          <source
+            srcset="{{ product_obj.featured_image | image_url: width: 600 }} 1x, {{ product_obj.featured_image | image_url: width: 1200 }} 2x">
+          <source 
             media="(min-width: 750px)"
-            srcset="{{ product_obj.featured_image | image_url: width: 800 }} 1x, {{ product_obj.featured_image | image_url: width: 1600 }} 2x"
-          >
-          <img
+            srcset="{{ product_obj.featured_image | image_url: width: 800 }} 1x, {{ product_obj.featured_image | image_url: width: 1600 }} 2x">
+          <img 
             class="product-showcase__image"
             src="{{ product_obj.featured_image | image_url: width: 800 }}"
             alt="{{ product_obj.title | escape }}"
             loading="lazy"
             width="800"
-            height="1067"
-          >
+            height="1067">
         </picture>
       {%- else -%}
         <div class="product-showcase__placeholder">
@@ -90,44 +68,20 @@
         </div>
       {%- endif -%}
 
-      <button
+      <button 
         type="button"
         class="product-showcase__hotspot"
         aria-label="View {{ product_obj.title | escape }}"
         data-product-handle="{{ product_obj.handle | escape }}"
-        style="--hotspot-x: {{ x_position }}%; --hotspot-y: {{ y_position }}%;"
-      >
+        style="--hotspot-x: {{ x_position }}%; --hotspot-y: {{ y_position }}%;">
         <span class="product-showcase__hotspot-indicator">
-          <svg
-            class="product-showcase__hotspot-icon"
-            aria-hidden="true"
-            width="48"
-            height="48"
-            viewBox="0 0 24 24"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <g filter="url(#filter0_d_5_3060)">
-            <circle cx="11.8571" cy="8.85714" r="7.85714" fill="#F8F8F8" fill-opacity="0.9"/>
-            <path d="M12.1045 6.02985V12.0738" stroke="black" stroke-linecap="square" stroke-linejoin="round"/>
-            <path d="M9.08252 9.05182H15.1265" stroke="black" stroke-linecap="square" stroke-linejoin="round"/>
-            </g>
-            <defs>
-            <filter id="filter0_d_5_3060" x="0" y="0" width="23.7144" height="23.7143" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
-            <feFlood flood-opacity="0" result="BackgroundImageFix"/>
-            <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
-            <feGaussianBlur stdDeviation="2"/>
-            <feComposite in2="hardAlpha" operator="out"/>
-            <feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.2 0"/>
-            <feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_5_3060"/>
-            <feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_5_3060" result="shape"/>
-            </filter>
-            </defs>
+          <svg class="product-showcase__hotspot-icon" width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+            <path d="M10 4V16M4 10H16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
           </svg>
         </span>
         <span class="product-showcase__hotspot-pulse"></span>
       </button>
-
+      
       {%- comment -%} Product info overlay {%- endcomment -%}
       <div class="product-showcase__product-info">
         <span class="product-showcase__product-title">{{ product_obj.title }}</span>
